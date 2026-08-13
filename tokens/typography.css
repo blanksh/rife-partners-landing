@@ -1,0 +1,54 @@
+/* Rife App Design System 2.0 — Typography
+   Two voices:
+   - Pretendard (sans) carries all Korean UI text, tight tracking on headlines.
+   - Playfair Display (serif) carries KEY NUMBERS ONLY — 잔여 횟수, 금액, 큰 날짜,
+     index numerals (01 02 03). The serif is what makes a figure feel like an asset.
+   Micro labels are English uppercase with wide tracking (NEARBY, MEMBERSHIP). */
+
+:root {
+	--font-sans:
+		"Pretendard Variable", "Pretendard", ui-sans-serif, system-ui,
+		-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR",
+		sans-serif;
+	--font-serif:
+		"Playfair Display", "Didot", "Bodoni 72", Georgia, "Times New Roman",
+		serif;
+
+	/* ── Sans scale (mobile-first) ── */
+	--text-micro: 10px; /* uppercase micro labels — with --tracking-caps-wide */
+	--text-caption: 11px; /* meta, timestamps, helper */
+	--text-12: 12px; /* dense meta, chips */
+	--text-13: 13px; /* secondary body, buttons sm/md */
+	--text-sm: 14px; /* list body */
+	--text-base: 15px; /* body, buttons lg */
+	--text-lg: 17px; /* card titles, row emphasis */
+	--text-title: 20px; /* page titles */
+	--text-xl: 22px; /* greeting/hero headlines */
+
+	/* ── Serif numeral scale ── */
+	--text-num-sm: 22px; /* inline figures, list amounts */
+	--text-num: 32px; /* card figures */
+	--text-num-lg: 44px; /* membership remaining count */
+	--text-num-xl: 56px; /* single hero figure */
+
+	/* ── Weights ── */
+	--weight-regular: 400;
+	--weight-medium: 500;
+	--weight-semibold: 600;
+	--weight-bold: 700;
+	--weight-serif: 500; /* serif numerals sit at 400–500, never bold */
+
+	/* ── Leading ── */
+	--leading-none: 1;
+	--leading-tight: 1.1; /* serif display figures */
+	--leading-snug: 1.35; /* headlines */
+	--leading-normal: 1.5;
+	--leading-relaxed: 1.65; /* long-form legal/body */
+
+	/* ── Tracking ── */
+	--tracking-tightest: -0.02em; /* Korean headlines */
+	--tracking-tight: -0.01em; /* titles */
+	--tracking-base: 0;
+	--tracking-caps: 0.14em; /* uppercase section labels */
+	--tracking-caps-wide: 0.22em; /* micro eyebrows (SATURDAY, JUL 5) */
+}

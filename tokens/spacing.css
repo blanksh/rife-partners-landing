@@ -1,0 +1,55 @@
+/* Rife App Design System 2.0 — Spacing · Radius · Elevation · Layout
+   4px base grid. Corners are near-sharp (2px) — the editorial signature.
+   Cards carry NO shadow; structure comes from hairlines and whitespace.
+   Elevation exists only on transient surfaces (sheet, dialog, toast). */
+
+:root {
+	/* ── 4px grid ── */
+	--space-1: 4px;
+	--space-1-5: 6px;
+	--space-2: 8px;
+	--space-2-5: 10px;
+	--space-3: 12px;
+	--space-3-5: 14px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-7: 28px;
+	--space-8: 32px;
+	--space-10: 40px;
+	--space-12: 48px;
+	--space-16: 64px;
+
+	/* ── Layout rhythm ── */
+	--screen-x: 20px; /* screen side padding */
+	--section-gap: 32px; /* vertical gap between home sections */
+	--header-height: 52px;
+	--bottom-nav-height: 56px;
+
+	/* ── Radius — near-sharp editorial corners ── */
+	--radius-xs: 2px; /* buttons · inputs · chips · tags · thumbnails */
+	--radius-md: 8px; /* toast · popover · small photo thumbs */
+	--radius-lg: 16px; /* centered dialogs */
+	--radius-sheet: 20px; /* bottom-sheet top corners */
+	--radius-full: 999px; /* avatars · the one round thing */
+
+	/* ── Hairline ── */
+	--hair: 1px;
+
+	/* ── Elevation (transient surfaces only) ── */
+	--shadow-none: none;
+	--shadow-sheet: 0 -12px 40px rgba(25, 23, 18, 0.14);
+	--shadow-dialog: 0 18px 54px rgba(25, 23, 18, 0.18);
+	--shadow-toast: 0 10px 30px rgba(25, 23, 18, 0.14);
+
+	/* ── Control metrics ── */
+	--control-height-sm: 32px;
+	--control-height-md: 40px;
+	--control-height-lg: 48px; /* full-width primary actions */
+	--input-height: 48px;
+	--tap-min: 44px; /* minimum touch target */
+
+	/* ── Motion ── */
+	--motion-fast: 0.16s ease; /* color/press transitions */
+	--motion-sheet: 0.28s cubic-bezier(0.32, 0.72, 0, 1); /* sheet slide */
+}

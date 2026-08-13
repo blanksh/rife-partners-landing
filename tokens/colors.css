@@ -1,0 +1,100 @@
+/* Rife App Design System 2.0 — Colors
+   "화이트 에디토리얼" — a paper-white ground, ink text, hairline structure,
+   and signal orange used only in scarce, deliberate doses.
+
+   Two layers:
+   1. Primitive scales (--neutral-*, --primary-*, --green-*, --red-*) — the palette.
+   2. Semantic aliases (--app-*) — what components actually use. Never point a
+      component at a primitive directly. */
+
+:root {
+	/* ══ 1. Primitive palette ══ */
+
+	/* Warm greige neutrals — the paper→ink axis */
+	--neutral-50: #f9f8f3;
+	--neutral-100: #f6f4ee;
+	--neutral-200: #eeebe1;
+	--neutral-300: #e7e4da;
+	--neutral-400: #d4cfc0;
+	--neutral-500: #b5b0a0;
+	--neutral-600: #85806f;
+	--neutral-700: #625d4f;
+	--neutral-800: #4a463d;
+	--neutral-900: #2e2b24;
+	--neutral-950: #191712;
+
+	/* Signal orange — the brand primary, tuned deeper than 1.0's #ff4e00 */
+	--primary-50: #fef1e9;
+	--primary-100: #fde3d3;
+	--primary-200: #fbc6a8;
+	--primary-300: #f79e6e;
+	--primary-400: #f4732f;
+	--primary-500: #f14b00;
+	--primary-600: #d64300;
+	--primary-700: #b23800;
+	--primary-800: #8c2d02;
+	--primary-900: #6e2506;
+	--primary-950: #431403;
+
+	/* Green — positive money movement, success */
+	--green-50: #ecf3ef;
+	--green-100: #d8e8df;
+	--green-200: #b3d3c2;
+	--green-300: #83b79d;
+	--green-400: #4c9873;
+	--green-500: #1f7a4f;
+	--green-600: #196743;
+	--green-700: #145537;
+	--green-800: #10432c;
+	--green-900: #0b3120;
+	--green-950: #062015;
+
+	/* Red — errors, destructive, negative states */
+	--red-50: #f9eeee;
+	--red-100: #f2dada;
+	--red-200: #e6b8b8;
+	--red-300: #d98f8f;
+	--red-400: #ce6363;
+	--red-500: #c33d3d;
+	--red-600: #a93232;
+	--red-700: #8c2929;
+	--red-800: #6f2121;
+	--red-900: #571b1b;
+	--red-950: #341010;
+
+	/* ══ 2. Semantic layer (--app-*) — use these in components ══ */
+
+	/* ── Ground ── */
+	--app-bg: #fcfbf8; /* paper — every screen's canvas (lighter than neutral-50) */
+	--app-surface: #ffffff; /* pure white — cards, sheets, dialogs */
+	--app-surface-2: var(--neutral-100); /* subtle fill — pressed rows, photo placeholder, skeleton base */
+	--app-scrim: rgba(25, 23, 18, 0.42); /* overlay dim behind sheets/dialogs */
+
+	/* ── Ink (text) ── */
+	--app-ink: var(--neutral-950); /* titles, key values, primary buttons */
+	--app-ink-2: var(--neutral-800); /* body text */
+	--app-ink-3: var(--neutral-600); /* stone — secondary text, meta */
+	--app-ink-4: var(--neutral-500); /* faint — placeholder, disabled text, idle nav */
+	--app-on-ink: #fcfbf8; /* text on ink fills */
+
+	/* ── Lines ── */
+	--app-line: var(--neutral-300); /* the hairline — dividers, borders, gauge track */
+	--app-line-soft: #f0eee6; /* softer divider inside cards */
+	--app-line-ink: var(--neutral-950); /* 1px ink rule — section top rules, outline CTA */
+
+	/* ── Signal orange (scarce by design) ── */
+	--app-accent: var(--primary-500); /* the single accent — dots, tags, gauge fill, one CTA per screen */
+	--app-accent-pressed: var(--primary-600);
+	--app-accent-tint: var(--primary-50); /* rare wash — active chip fill, unread row */
+
+	/* ── Semantic status ── */
+	--app-success: var(--green-500);
+	--app-success-tint: var(--green-50);
+	--app-error: var(--red-500);
+	--app-error-tint: var(--red-50);
+
+	/* ── Photo placeholders (imagery not yet loaded) ── */
+	--app-photo-1: linear-gradient(150deg, #b9b4a5 0%, #7c7666 100%);
+	--app-photo-2: linear-gradient(150deg, #cbb9a4 0%, #96826a 100%);
+	--app-photo-3: linear-gradient(150deg, #a8adb8 0%, #6d7280 100%);
+}
