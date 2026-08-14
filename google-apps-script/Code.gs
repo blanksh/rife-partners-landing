@@ -4,7 +4,7 @@
  */
 
 var SHEET_ID = '1yUrTxyjgxXa4GzbdlXMMXqx0JaC4URtpxUjW5qLVFmo';
-var NOTIFY_EMAIL = 'official@rife.im';   // 알림 받을 주소 (필요 시 변경)
+var NOTIFY_EMAIL = 'official@rife.im, official.rife@gmail.com';   // 알림 받을 주소 (쉼표로 여러 명)
 var HEADERS = ['접수일시', '매장 이름', '대표자 성함', '연락처', '매장 지역', '인스타그램 계정', '네이버 플레이스 링크', '유입 경로', '남기실 말씀'];
 
 function doPost(e) {
