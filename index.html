@@ -732,8 +732,11 @@
         <label class="fm-field">매장 지역 <span class="fm-req">*</span>
           <input type="text" name="region" placeholder="예: 서울 마포구 서교동" required>
         </label>
-        <label class="fm-field">인스타그램 · 네이버 플레이스 링크
-          <input type="text" name="link" placeholder="선택 입력">
+        <label class="fm-field">인스타그램 계정 <span class="fm-req">*</span>
+          <input type="text" name="instagram" placeholder="예: @cafe_name 또는 프로필 링크" required>
+        </label>
+        <label class="fm-field">네이버 플레이스(지도) 링크 <span class="fm-req">*</span>
+          <input type="text" name="naver" placeholder="네이버 지도 매장 페이지 링크" required>
         </label>
         <label class="fm-field">남기실 말씀
           <textarea name="memo" placeholder="선택 입력"></textarea>
@@ -757,7 +760,7 @@
      발급된 /exec URL 을 아래에 붙여넣으면 제출 데이터가 시트에 쌓입니다.
      비워두면 시트 전송 없이 접수 완료 화면만 표시됩니다.
      ───────────────────────────────────────────────────────────── */
-  var SHEET_ENDPOINT = "";
+  var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxMR4y0zg0UHB9qqj8g4tKLNkxhyctbA0I9ZgmwvwY32epiI9swlEgw4qSxxEvt_KPq/exec";
 
   /* ── 파트너 신청 폼 모달 ── */
   var modal = document.getElementById("applyModal");
@@ -793,7 +796,7 @@
     e.preventDefault();
     var f = e.target;
     var err = document.getElementById("fmErr");
-    var required = ["store", "owner", "phone", "region"];
+    var required = ["store", "owner", "phone", "region", "instagram", "naver"];
     var ok = required.every(function(n){ return f[n].value.trim() !== ""; }) && f.agree.checked;
     if (!ok){ err.classList.add("show"); return; }
     err.classList.remove("show");
@@ -801,7 +804,7 @@
     var data = {
       store: f.store.value.trim(), owner: f.owner.value.trim(),
       phone: f.phone.value.trim(), region: f.region.value.trim(),
-      link: f.link.value.trim(), memo: f.memo.value.trim()
+      instagram: f.instagram.value.trim(), naver: f.naver.value.trim(), memo: f.memo.value.trim()
     };
 
     function showDone(){

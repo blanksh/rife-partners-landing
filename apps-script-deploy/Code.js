@@ -1,11 +1,6 @@
 /**
  * 리프 파트너 신청 폼 → 구글 시트 수집기 (Google Apps Script 웹앱)
- *
- * 연동 대상 시트:
- *   리프 파트너 신청 (Partner Applications)
- *   https://docs.google.com/spreadsheets/d/1yUrTxyjgxXa4GzbdlXMMXqx0JaC4URtpxUjW5qLVFmo/edit
- *
- * 배포 방법은 같은 폴더의 README.md 참고.
+ * 대상 시트: 리프 파트너 신청 (Partner Applications)
  */
 
 var SHEET_ID = '1yUrTxyjgxXa4GzbdlXMMXqx0JaC4URtpxUjW5qLVFmo';
@@ -17,7 +12,6 @@ function doPost(e) {
 
     var sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
 
-    // 첫 실행 시 헤더 행 자동 생성
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(HEADERS);
       sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
@@ -28,7 +22,7 @@ function doPost(e) {
       new Date(),
       data.store  || '',
       data.owner  || '',
-      "'" + (data.phone || ''),   // 앞자리 0 보존을 위해 텍스트로 저장
+      "'" + (data.phone || ''),
       data.region || '',
       data.instagram || '',
       data.naver  || '',
@@ -46,12 +40,12 @@ function doPost(e) {
   }
 }
 
-// 배포 URL이 살아있는지 브라우저에서 확인용 (선택)
 function doGet() {
   return ContentService.createTextOutput('RIFE partner application endpoint is running.');
 }
 
-// 최초 1회 실행용: 편집기에서 Run → 시트 접근 권한 승인.
+// 최초 1회 실행용: 이 함수를 편집기에서 Run 하면 시트 접근 권한(스코프) 승인 화면이 뜹니다.
+// 승인만 완료되면 익명 폼 제출이 시트에 기록됩니다.
 function authorize() {
   var name = SpreadsheetApp.openById(SHEET_ID).getSheets()[0].getName();
   Logger.log('authorized. sheet: ' + name);
