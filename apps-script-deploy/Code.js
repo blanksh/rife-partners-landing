@@ -4,7 +4,7 @@
  */
 
 var SHEET_ID = '1yUrTxyjgxXa4GzbdlXMMXqx0JaC4URtpxUjW5qLVFmo';
-var HEADERS = ['접수일시', '매장 이름', '대표자 성함', '연락처', '매장 지역', '인스타그램 계정', '네이버 플레이스 링크', '남기실 말씀'];
+var HEADERS = ['접수일시', '매장 이름', '대표자 성함', '연락처', '매장 지역', '인스타그램 계정', '네이버 플레이스 링크', '유입 경로', '남기실 말씀'];
 
 function doPost(e) {
   try {
@@ -12,11 +12,9 @@ function doPost(e) {
 
     var sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
 
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(HEADERS);
-      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
-      sheet.setFrozenRows(1);
-    }
+    // 헤더 행 항상 최신으로 보정 (열 구성 변경 대응)
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
+    sheet.setFrozenRows(1);
 
     sheet.appendRow([
       new Date(),
@@ -26,6 +24,7 @@ function doPost(e) {
       data.region || '',
       data.instagram || '',
       data.naver  || '',
+      data.source || '',
       data.memo   || ''
     ]);
 

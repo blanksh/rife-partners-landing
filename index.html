@@ -131,6 +131,11 @@
   .rife-modal .fm-check{display:flex;align-items:flex-start;gap:8px;margin-top:20px;
     font-size:12px;line-height:1.5;color:#85806f;font-weight:500;cursor:pointer}
   .rife-modal .fm-check input{width:16px;height:16px;flex-shrink:0;margin-top:1px;accent-color:#f14b00}
+  .rife-modal .fm-gtitle{display:block;font-size:13px;font-weight:600;color:#4a463d;margin-top:16px}
+  .rife-modal .fm-opts{margin-top:8px;display:flex;flex-direction:column;gap:9px}
+  .rife-modal .fm-opt{display:flex;align-items:center;gap:8px;font-size:14px;color:#191712;font-weight:500;cursor:pointer}
+  .rife-modal .fm-opt input{width:16px;height:16px;flex-shrink:0;margin:0;accent-color:#f14b00}
+  .rife-modal #srcEtcText{margin-top:2px;display:none}
   .rife-modal .fm-submit{width:100%;height:48px;margin-top:22px;border:0;border-radius:2px;
     background:#f14b00;color:#fcfbf8;font-size:15px;font-weight:600;cursor:pointer;transition:background-color .16s ease}
   .rife-modal .fm-submit:hover{background:#d64300}
@@ -738,6 +743,15 @@
         <label class="fm-field">네이버 플레이스(지도) 링크 <span class="fm-req">*</span>
           <input type="text" name="naver" placeholder="네이버 지도 매장 페이지 링크" required>
         </label>
+        <span class="fm-gtitle">리프를 어떻게 알게 되셨나요?</span>
+        <div class="fm-opts">
+          <label class="fm-opt"><input type="checkbox" name="source" value="인스타그램 콘텐츠"> 인스타그램 콘텐츠</label>
+          <label class="fm-opt"><input type="checkbox" name="source" value="검색"> 검색</label>
+          <label class="fm-opt"><input type="checkbox" name="source" value="유튜브"> 유튜브</label>
+          <label class="fm-opt"><input type="checkbox" name="source" value="지인 추천"> 지인 추천</label>
+          <label class="fm-opt"><input type="checkbox" name="source" value="기타" id="srcEtc"> 기타</label>
+          <input type="text" name="sourceEtc" id="srcEtcText" placeholder="기타 경로를 입력해 주세요">
+        </div>
         <label class="fm-field">남기실 말씀
           <textarea name="memo" placeholder="선택 입력"></textarea>
         </label>
@@ -792,6 +806,16 @@
     if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
   });
 
+  // 유입 경로 '기타' 체크 시 직접입력 칸 표시
+  var srcEtc = document.getElementById("srcEtc");
+  var srcEtcText = document.getElementById("srcEtcText");
+  if (srcEtc && srcEtcText) {
+    srcEtc.addEventListener("change", function(){
+      srcEtcText.style.display = this.checked ? "block" : "none";
+      if (this.checked) srcEtcText.focus();
+    });
+  }
+
   document.getElementById("applyForm").addEventListener("submit", function(e){
     e.preventDefault();
     var f = e.target;
@@ -801,10 +825,19 @@
     if (!ok){ err.classList.add("show"); return; }
     err.classList.remove("show");
 
+    // 유입 경로: 체크된 항목 + 기타 직접입력
+    var sources = Array.prototype.map.call(
+      f.querySelectorAll('input[name="source"]:checked'), function(x){ return x.value; });
+    var etcText = f.sourceEtc ? f.sourceEtc.value.trim() : "";
+    if (sources.indexOf("기타") !== -1 && etcText) {
+      sources = sources.map(function(s){ return s === "기타" ? ("기타(" + etcText + ")") : s; });
+    }
+
     var data = {
       store: f.store.value.trim(), owner: f.owner.value.trim(),
       phone: f.phone.value.trim(), region: f.region.value.trim(),
-      instagram: f.instagram.value.trim(), naver: f.naver.value.trim(), memo: f.memo.value.trim()
+      instagram: f.instagram.value.trim(), naver: f.naver.value.trim(),
+      source: sources.join(", "), memo: f.memo.value.trim()
     };
 
     function showDone(){
