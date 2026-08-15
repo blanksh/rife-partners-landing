@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RIFE Partners · 개인 카페 매출 성장 시스템</title>
 <meta name="description" content="골목 개인 카페가 테이크아웃 고객을 만드는 방법. 리프 파트너 카페는 매달 고정 매출을 쌓고 있습니다.">
+<!-- 보안/개인정보 정책 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net data:; img-src 'self' data: https://i.ytimg.com https://img.youtube.com; script-src 'self' 'unsafe-inline'; connect-src https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; form-action 'self' https://script.google.com; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index,follow">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.min.css">
 <style>
   /* ===================================================================
@@ -668,7 +672,11 @@
       <h3 id="fmTitle">파트너 신청</h3>
       <p class="fm-sub">매장 정보를 남겨주시면, 심사 후 개별적으로 연락드립니다.</p>
       <p class="fm-sub" style="color:#85806f;font-size:12px">입점비 없음 · 선착순 입점</p>
-      <form id="applyForm" novalidate>
+      <form id="applyForm" novalidate autocomplete="on">
+        <!-- 봇 차단용 허니팟 (사람에게 보이지 않음) -->
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+          <label>Website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
+        </div>
         <label class="fm-field">매장 이름 <span class="fm-req">*</span>
           <input type="text" name="store" autocomplete="organization" required>
         </label>
@@ -701,7 +709,7 @@
         </label>
         <label class="fm-check">
           <input type="checkbox" name="agree" required>
-          <span>개인정보 수집·이용에 동의합니다. (매장 심사 및 연락 목적 · 문의: official@rife.im)</span>
+          <span>개인정보 수집·이용에 동의합니다. 수집한 정보는 <b>매장 심사·연락 목적으로만</b> 사용하고 제3자에게 제공하지 않으며, 처리 완료 후 파기합니다. (문의: official@rife.im)</span>
         </label>
         <div class="fm-err" id="fmErr">필수 항목을 모두 입력하고 동의에 체크해 주세요.</div>
         <button type="submit" class="fm-submit">신청 제출하기</button>
@@ -719,6 +727,8 @@
      비워두면 시트 전송 없이 접수 완료 화면만 표시됩니다.
      ───────────────────────────────────────────────────────────── */
   var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxMR4y0zg0UHB9qqj8g4tKLNkxhyctbA0I9ZgmwvwY32epiI9swlEgw4qSxxEvt_KPq/exec";
+  // 폼 위조/봇 방지용 공유 토큰 (Apps Script의 FORM_TOKEN과 동일해야 함)
+  var FORM_TOKEN = "rife-partner-2026-8f3a1c";
 
   /* ── 파트너 신청 폼 모달 ── */
   var modal = document.getElementById("applyModal");
@@ -764,6 +774,10 @@
     e.preventDefault();
     var f = e.target;
     var err = document.getElementById("fmErr");
+
+    // 허니팟: 사람은 못 보는 필드가 채워졌으면 봇 → 조용히 무시(성공 화면만)
+    if (f.company_website && f.company_website.value) { showDone(); return; }
+
     var required = ["store", "owner", "phone", "region", "instagram", "naver"];
     var ok = required.every(function(n){ return f[n].value.trim() !== ""; }) && f.agree.checked;
     if (!ok){ err.classList.add("show"); return; }
@@ -778,6 +792,7 @@
     }
 
     var data = {
+      token: FORM_TOKEN,
       store: f.store.value.trim(), owner: f.owner.value.trim(),
       phone: f.phone.value.trim(), region: f.region.value.trim(),
       instagram: f.instagram.value.trim(), naver: f.naver.value.trim(),
